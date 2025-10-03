@@ -1,0 +1,21 @@
+#include <iostream>
+#include "sat_solver.h"
+#include "cnf_parser.h"
+
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <cnf-file>" << std::endl;
+        return 1;
+    }
+
+    CNFFormula formula = CNFParser::parse(argv[1]);
+    SATSolver solver(formula);
+
+    bool result = solver.solve();
+    if (result) {
+        std::cout << "SATISFIABLE" << std::endl;
+    } else {
+        std::cout << "UNSATISFIABLE" << std::endl;
+    }
+    return 0;
+}
